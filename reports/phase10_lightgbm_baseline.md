@@ -1,5 +1,7 @@
 # Phase 10 — CPU LightGBM pair scorer
 
+> Historical development benchmark on independently sampled targets. Entity-quality results are superseded by [the entity-complete dev correction](dev_sample_correction.md); stage throughput remains an engineering observation.
+
 The baseline scorer uses 36 fixed float32 features, LightGBM binary objective, 63 leaves, depth 10, learning rate 0.05, 0.8 feature/bagging fractions, 8 CPU threads, a fixed seed, and early stopping on held-out S1 entities. It stores a text model and scores every validation candidate in bounded batches. Training uses the Phase 9 five-negatives-per-positive quota policy; the realized ratio is reported in that phase. Pair metrics are diagnostics, never the model-selection objective.
 
 | Dev universe | Train pairs | Validation pairs | Best tree | Fit | Total | Peak RSS | Pair AP | Pair P@0.5 | Pair R@0.5 |

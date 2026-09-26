@@ -25,7 +25,7 @@ Phase 2 normalizes any source file into cached Parquet using bounded Arrow batch
 .venv/bin/python -m chimera_submission.code.business_entity_resolution.src.normalization.run --split train --source 1 --sample-modulus 16
 ```
 
-Run the same command with `--source 2` and `--source 3`, and with `--split test`, for all six source files. Omit `--sample-modulus` to use the selected config's default (dev: 1/128 rows, AWS: full). The sample is for engineering checks only; independently sampled target IDs do not support valid candidate-recall claims.
+Run the same command with `--source 2` and `--source 3`, and with `--split test`, for all six source files. Omit `--sample-modulus` to use the selected config's default (dev: 1/128 rows, AWS: full). For sampled **train** targets, every GT partner of a sampled S1 is included alongside background targets, so entity-level validation has complete truth sets. The reduced background candidate universe can still make the development score optimistic; full-universe evaluation remains required.
 
 Phase 3 exact blocking, after the three normalized files for a split exist:
 
@@ -34,7 +34,7 @@ Phase 3 exact blocking, after the three normalized files for a split exist:
 .venv/bin/python -m chimera_submission.code.business_entity_resolution.src.blocking.eval_exact --normalized-dir artifacts/normalized/sample_16 --candidate artifacts/blocking/sample_16/train_exact.parquet
 ```
 
-The second command reports **conditional sample recall** only. Full-universe recall and entity completeness are later evaluation gates.
+The second command reports recall within the entity-complete development target universe. Full-universe recall remains a production evaluation gate.
 
 Phase 4 adds rare-token and name-plus-postal/house channels:
 
@@ -59,7 +59,7 @@ Phase 6 unions the channel outputs, ORs provenance, and caps each S1 candidate s
 .venv/bin/python -m chimera_submission.code.business_entity_resolution.src.retrieval.eval_union --sample-modulus 16
 ```
 
-The cap audit expects cached K=5,10,15,20,30 training runs. The final scored candidates are the `part-*.parquet` files in the `final_dir` printed by `run_union`. Sample recall is conditional on target IDs being independently sampled; use Phase 7 for the full blocking report.
+The cap audit expects cached K=5,10,15,20,30 training runs. The final scored candidates are the `part-*.parquet` files in the `final_dir` printed by `run_union`. Sample recall now covers all true partners of the sampled train S1, though distractor density remains lower than production.
 
 Phase 7 evaluates each channel, union, and cap on both pair and entity measures, and profiles missed ground-truth pairs:
 

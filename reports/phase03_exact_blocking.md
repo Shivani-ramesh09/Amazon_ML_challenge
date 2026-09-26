@@ -1,5 +1,7 @@
 # Phase 3 exact/core blocking benchmark — 2026-09-26
 
+> Historical development benchmark on independently sampled targets. Entity-quality results are superseded by [the entity-complete dev correction](dev_sample_correction.md); stage throughput remains an engineering observation.
+
 Command: `.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.blocking.run_exact --split train --sample-modulus 8`. Normalized S1 and target rows were independently sampled by ID suffix modulo 8. Evaluation command: `.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.blocking.eval_exact --normalized-dir artifacts/normalized/sample_8 --candidate artifacts/blocking/sample_8/train_exact.parquet`. All raw input comes from the competition files. The index is a keyed collection of compact uint32 target postings plus columnar target metadata; pairs are streamed to Parquet. Oversized blocks (`>64` targets) use country plus postal, house, exact address, and address-token secondary keys. Blocks needing a 30-pair channel cap are ranked by address/number/postal/country evidence with stable target-ID ties. Trimmed raw hits and truth losses are reported.
 
 | Development universe | 1/16 | 1/8 |

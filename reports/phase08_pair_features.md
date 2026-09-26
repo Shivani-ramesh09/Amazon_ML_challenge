@@ -1,5 +1,7 @@
 # Phase 8 — bounded CPU pair features
 
+> Historical development benchmark on independently sampled targets. Entity-quality results are superseded by [the entity-complete dev correction](dev_sample_correction.md); stage throughput remains an engineering observation.
+
 The builder loads selected normalized Arrow columns once for S1 and S2/S3, maps candidate IDs to integer row offsets, gathers rows per batch, and writes only IDs plus 36 float32 numeric features. It includes name and address lexical similarities, postal/house and number agreement or conflict, open-set country relation, retrieval provenance, and retrieval scores. Absent values are represented by explicit missingness or provenance flags; all output numeric fields were finite on the development run. No pair labels are used.
 
 At cap 30, the modulus-16 train run transformed 2,658,769 candidate pairs in 12 batches of at most 250,000: 35.87 s total, 34.24 s in row gather/feature transformation, 1.11 GB peak RSS, 52.18 MB output. The test run transformed 2,187,841 pairs in 30.18 s, 1.15 GB peak RSS, 45.10 MB output. Both runs used one process/thread; memory-safe parallelism remains optional because the measured stage is comfortably inside budget. A cached rerun skips all work. The complete train artifact has exactly one feature row per candidate, zero null numeric values and zero nonfinite values.

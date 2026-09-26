@@ -1,5 +1,7 @@
 # Phase 4 rare-token and numeric/postal blocking — 2026-09-26
 
+> Historical development benchmark on independently sampled targets. Entity-quality results are superseded by [the entity-complete dev correction](dev_sample_correction.md); stage throughput remains an engineering observation.
+
 Run `.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.blocking.run_rare_numeric --split train --sample-modulus 8`, then `...src.blocking.eval_cheap --normalized-dir artifacts/normalized/sample_8 --exact artifacts/blocking/sample_8/train_exact.parquet --additional artifacts/blocking/sample_8/train_rare_numeric.parquet`. Both channels index only provided normalized target data. Rare name tokens are ordered by target document frequency; tokens with DF >64 never enter the rare index. Composite keys require a name token with DF <=5,000 plus country and either postal or house number; no number-only global join exists. Target postings use compact uint32 arrays. Each query scans at most three rare token keys and two name tokens combined with at most two address values; each composite posting lookup is capped at 128 and counted when oversized. Output caps are 15 rare-token and 10 numeric/postal pairs per S1. The index and candidate artifacts have separate signatures, so a query change reuses the target index.
 
 | Development universe | 1/16 | 1/8 |

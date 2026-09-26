@@ -9,7 +9,7 @@ import json
 import pyarrow.parquet as pq
 
 from chimera_submission.code.business_entity_resolution.src.normalization.address import address_views, country_key
-from chimera_submission.code.business_entity_resolution.src.normalization.run import normalize_file, main
+from chimera_submission.code.business_entity_resolution.src.normalization.run import linked_target_ids, normalize_file, main
 from chimera_submission.code.business_entity_resolution.src.normalization.text import clean_text, name_views
 
 
@@ -81,6 +81,24 @@ class NormalizationTests(unittest.TestCase):
             with patch("sys.argv", args), contextlib.redirect_stdout(io.StringIO()):
                 self.assertEqual(main(), 0)
             self.assertEqual(pq.read_table(output).num_rows, 2)
+
+    def test_train_sample_includes_all_truth_partners(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            truth = root / "truth.tsv"
+            truth.write_text("source1_entity_id\tmatched_entity_ids\n"
+                             "S1-2\tS2-1,S3-3\nS1-3\tS2-3\n")
+            self.assertEqual(linked_target_ids(truth, 2), {"S2-1", "S3-3"})
+            source = root / "source.tsv"
+            source.write_text("entity_id\tbusiness_name\tbusiness_address\tcountry\n"
+                              "S2-1\tPartner\tOne Road\tIndia\n"
+                              "S2-3\tOther\tThree Road\tIndia\n"
+                              "S2-4\tBackground\tFour Road\tIndia\n")
+            output = root / "out.parquet"
+            normalize_file(source, output, sample_modulus=2,
+                           include_entity_ids=linked_target_ids(truth, 2))
+            self.assertEqual(set(pq.read_table(output, columns=["entity_id"])["entity_id"].to_pylist()),
+                             {"S2-1", "S2-4"})
 
 
 if __name__ == "__main__":

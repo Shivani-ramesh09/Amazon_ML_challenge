@@ -1,5 +1,7 @@
 # Phase 9 — grouped training pairs
 
+> Historical development benchmark on independently sampled targets. Entity-quality results are superseded by [the entity-complete dev correction](dev_sample_correction.md); stage throughput remains an engineering observation.
+
 Feature rows are labeled only after retrieval, candidate capping, and feature computation. The existing stable hash split assigns entire S1 entities to 85% training or 15% validation. All retrieved positive pairs are retained; validation keeps its full candidate distribution. Training negatives combine high-similarity false pairs (name, address, exact/core, TF-IDF, postal/house evidence) with a deterministic smaller easy tail. A train S1 with no retrieved positive contributes its hardest false pair so the model sees zero-match cases. No truth can rescue a pair excluded by retrieval.
 
 On the modulus-16, cap-30 development run, 2,658,769 feature pairs split into 398,726 untouched validation pairs and 2,260,043 training-entity candidate pairs. Validation has 3,558 positive pairs; training entities have 20,146. Thus all 23,704 GT pairs recovered by Phase 7 remain labeled. Training and validation S1 sets have zero overlap, and the sampled train set has no duplicate pair. The split contains 117,576 train S1 and 20,825 validation S1, including entities with zero candidates.

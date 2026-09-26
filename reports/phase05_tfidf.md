@@ -1,5 +1,7 @@
 # Phase 5 sparse character TF-IDF retrieval — 2026-09-26
 
+> Historical development benchmark on independently sampled targets. Entity-quality results are superseded by [the entity-complete dev correction](dev_sample_correction.md); stage throughput remains an engineering observation.
+
 The first global sparse top-N probe was too slow: on 646,068 target names, 1,000 queries with unpruned 3–5 `char_wb` n-grams took 2.90 s. The target CSR had 31.1M nonzeros (0.234 GB), so RAM was not the issue; frequent n-grams caused expensive sparse multiplication. A naive full-scale projection was many hours. Pruning document frequencies above 1% of targets cut the same probe to 0.381 s/1k queries; at 0.1% it took 0.072 s/1k with 5.5M target nonzeros. This measured bottleneck motivated the `max_df=0.001` CPU design. All products use `sparse-dot-topn` with CSR float32, top-K=20 and similarity threshold 0.2; no dense pairwise matrix is allocated.
 
 | Development universe | 1/16 train | 1/8 train | 1/16 test |

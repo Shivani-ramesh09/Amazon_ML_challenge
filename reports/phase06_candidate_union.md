@@ -1,5 +1,7 @@
 # Phase 6 — bounded candidate union
 
+> Historical development benchmark on independently sampled targets. Entity-quality results are superseded by [the entity-complete dev correction](dev_sample_correction.md); stage throughput remains an engineering observation.
+
 The final candidate builder streams the three channel Parquets into S1-hash shards, then deduplicates each shard by `(S1 ID, target ID)`. It ORs five provenance flags, retains the best retrieval scores/ranks, applies a deterministic cheap evidence order, and caps the set per S1. The capped Parquet shards are the sole input planned for pair scoring. Raw sharding and cap/ranking artifacts have separate cache keys.
 
 ## Measured development benchmark

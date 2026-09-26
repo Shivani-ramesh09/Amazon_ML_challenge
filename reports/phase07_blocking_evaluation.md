@@ -1,5 +1,7 @@
 # Phase 7 — blocking evaluation
 
+> Historical development benchmark on independently sampled targets. Entity-quality results are superseded by [the entity-complete dev correction](dev_sample_correction.md); stage throughput remains an engineering observation.
+
 The shardwise evaluator reads final candidates exactly as the scorer will see them. It includes zero-candidate S1 rows, compares retrieved pairs to ground truth, and reports pair, any-hit, complete-hit, country, cardinality, and best-case entity F0.5. It runs per S1-hash shard rather than collecting all candidate pairs. A hand fixture checks singleton, multi-match, retrieval miss, and F0.5 arithmetic.
 
 On the deterministic modulus-16 train sample, 138,401 S1 and 646,068 S2/S3 rows yielded 29,999 **eligible** GT pairs. This is a conditional experiment: independently sampled targets omit most true partners. Of selected S1, 7,827 are true singletons, while 111,344 have zero *eligible* GT pairs. The latter number must never be treated as true singleton prevalence. The sampled macro oracle over all S1 is therefore inflated; the eligible-positive oracle and pair recall are the relevant development diagnostics. Full-universe recall is unmeasured.
