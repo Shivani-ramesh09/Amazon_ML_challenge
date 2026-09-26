@@ -39,8 +39,7 @@ SELECT := $(PYTHON) -m $(MODULE).output.select_manifest \
 	normalize-train exact-train rare-train address-train tfidf-train \
 	train-retrieval cap-sweep blocking-report features-train training-pairs \
 	pair-model entity-validation thresholds errors finalize train \
-	infer submit validate dev aws-blocking aws-train aws-infer aws-submit
-
+	infer submit validate dev aws-blocking aws-train aws-infer aws-submit run
 
 help:
 	@printf '%s\n' \
@@ -409,3 +408,9 @@ aws-submit:
 		PROFILE=aws_cpu \
 		SAMPLE_MODULUS=1 \
 		validate
+
+run:
+	@$(MAKE) aws-blocking
+	@$(MAKE) aws-train
+	@$(MAKE) aws-infer
+	@$(MAKE) aws-submit
