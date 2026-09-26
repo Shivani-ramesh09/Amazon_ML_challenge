@@ -60,12 +60,12 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Redesign excessive stage or gate recall loss; review diff; commit `phase-05`
 
 ## Phase 6 — Candidate union, deduplication and cap
-- [ ] Merge channel outputs by canonical integer pair key and OR provenance
-- [ ] Implement frequency-aware evidence ranking and deterministic tie order
-- [ ] Evaluate K=5,10,15,20,30 and save exact final scored candidate Parquet
-- [ ] Test dedup, flags, cap, empty S1, stable ordering; integrate on dev sample
-- [ ] Report before/after volume, RSS/bytes/time and projected cost
-- [ ] Resolve cap recall loss; review diff; commit `phase-06`
+- [x] Merge channel outputs by canonical S1/target pair key and OR provenance
+- [x] Implement frequency-aware evidence ranking and deterministic tie order
+- [x] Evaluate K=5,10,15,20,30 and save exact final scored candidate Parquet
+- [x] Test dedup, flags, cap, empty S1, stable ordering; integrate on dev sample
+- [x] Report before/after volume, RSS/bytes/time and projected cost
+- [x] Resolve major numeric/postal cap recall loss; review diff; commit `phase-06`
 
 ## Phase 7 — Blocking evaluation
 - [ ] Compute pair recall, GT hits, entity any-hit and complete recall per channel/union/cap
