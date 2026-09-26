@@ -144,3 +144,14 @@ Phase 15 has a frozen full-refit workflow. It uses the held-out model's chosen b
 ```
 
 Use `--config chimera_submission/code/business_entity_resolution/configs/aws_cpu.yaml` on the production machine after all full-universe upstream stages have completed. The development command passed; the AWS full-data run and ~3-hour/<50-GB acceptance gate are still pending. The pre-refit validation macro F0.5 is recorded in the frozen manifest and is **not** an independent score for the final refit.
+
+Phase 16 runs cache-aware test normalization, all frozen retrieval channels, capped candidate union, batched features, and scores every final candidate with the refitted model:
+
+```bash
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.inference.run \
+  --config chimera_submission/code/business_entity_resolution/configs/dev.yaml \
+  --sample-modulus 16 \
+  --frozen-manifest artifacts/models/sample_16/final_ac77532ec2c6/manifest.json
+```
+
+For the full AWS run, use `configs/aws_cpu.yaml` and its corresponding **full-universe** frozen manifest, omitting `--sample-modulus`. The runner requires the inference config to match the frozen training config, checks the train-fitted vectorizer hash, and records per-stage timing and total scored-pair coverage in `artifacts/reports/inference/`. The development smoke result is in `reports/phase16_inference_development.md`; full inference remains pending.

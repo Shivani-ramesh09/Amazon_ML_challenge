@@ -1,0 +1,1 @@
+"""Frozen CPU test inference."""

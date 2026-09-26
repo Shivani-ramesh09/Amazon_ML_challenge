@@ -135,10 +135,10 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Update reproduction commands; review diff; commit Phase 15 development workflow (AWS full-run gate remains open)
 
 ## Phase 16 — Test inference
-- [ ] Apply frozen train-fitted vectorizer/model/policy to all test S1, without test fitting or threshold changes
-- [ ] Cache batched test normalization/retrieval/final candidates/features/scores
-- [ ] Verify exact S1 coverage, score every final candidate, no missing batches
-- [ ] Test dev smoke then run full test; profile actual stage time/RSS/artifact bytes
+- [ ] Apply frozen train-fitted vectorizer/model/policy to all test S1, without test fitting or threshold changes (dev inference passed; full pending)
+- [x] Cache batched test normalization/retrieval/final candidates/features/scores on development sample
+- [x] Verify exact sampled S1 coverage, score every final candidate, no missing batches
+- [ ] Test dev smoke then run full test; profile actual stage time/RSS/artifact bytes (dev passed, full pending)
 - [ ] Meet/resolve ~2h and <50GB targets; review diff; commit `phase-16`
 
 ## Phase 17 — Submission and validation
