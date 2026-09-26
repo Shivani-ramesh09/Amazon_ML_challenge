@@ -69,3 +69,13 @@ Phase 7 evaluates each channel, union, and cap on both pair and entity measures,
 ```
 
 The evaluation JSON is saved in `artifacts/reports/blocking/`. The default candidate cap is now 30 because the measured recall gain over 20 justified the extra candidates on the development sample. Full-universe recall and final entity F0.5 still require the production run.
+
+Phase 8 builds 36 numeric pair features from the exact final candidate set using bounded Arrow gathers and 250,000-pair batches in dev:
+
+```bash
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.features.run --split train --sample-modulus 16 --cap 30
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.features.run --split test --sample-modulus 16 --cap 30
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.features.benchmark --sample-modulus 16 --pairs 50000
+```
+
+Feature Parquet batches and a manifest are cached in `artifacts/features/`. The train and test commands share the same code path and feature schema.

@@ -76,12 +76,12 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Gate downstream work on recall and candidate budget; review diff; commit `phase-07`
 
 ## Phase 8 — Batched pair features
-- [ ] Define CPU feature-builder interface and stable feature schema
-- [ ] Add name, address, postal/numeric, country, missingness and retrieval-provenance features
-- [ ] Avoid redundant expensive features until ablated; batch 250k–1M pairs
-- [ ] Write bounded Parquet partitions; test exact feature values and finite/missing behavior
-- [ ] Benchmark pair throughput, per-feature cost, RSS/bytes and train/test projection
-- [ ] Resolve budget gate; review diff; commit `phase-08`
+- [x] Define CPU feature-builder interface and stable feature schema
+- [x] Add name, address, postal/numeric, country, missingness and retrieval-provenance features
+- [x] Avoid redundant expensive features until ablated; batch 250k–1M pairs
+- [x] Write bounded Parquet partitions; test exact feature values and finite/missing behavior
+- [x] Benchmark pair throughput, per-feature cost, RSS/bytes and train/test projection
+- [x] Resolve budget gate; review diff; commit `phase-08`
 
 ## Phase 9 — Training pairs
 - [ ] Label only final retrieved candidates; retain all retrieved positives
