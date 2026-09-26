@@ -128,11 +128,11 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Keep only justified stable gain; test and profile; review diff; commit `phase-14`
 
 ## Phase 15 — Full training and frozen model
-- [ ] Lock configs/schema/seed/manifests and train chosen scorer on all labeled train S1
-- [ ] Preserve pre-refit validation report and note final refit is not independently scored
-- [ ] Test frozen model reload and deterministic sample prediction
+- [ ] Lock full-universe configs/schema/seed/manifests and train chosen scorer on all labeled train S1 (development refit passed)
+- [x] Preserve pre-refit validation report and note final refit is not independently scored
+- [x] Test frozen model reload and deterministic sample prediction on development sample
 - [ ] Report full pipeline wall time, stage time, RSS and model size; meet/resolve budget
-- [ ] Update reproduction commands; review diff; commit `phase-15`
+- [x] Update reproduction commands; review diff; commit Phase 15 development workflow (AWS full-run gate remains open)
 
 ## Phase 16 — Test inference
 - [ ] Apply frozen train-fitted vectorizer/model/policy to all test S1, without test fitting or threshold changes

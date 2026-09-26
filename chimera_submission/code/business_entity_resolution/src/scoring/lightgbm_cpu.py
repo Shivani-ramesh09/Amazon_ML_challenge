@@ -29,6 +29,16 @@ class LightGBMPairScorer:
         self.early_stopping_rounds = early_stopping_rounds
         self.model: lgb.Booster | None = None
 
+    def _params(self) -> dict:
+        return {
+            "objective": "binary", "metric": "binary_logloss", "learning_rate": self.learning_rate,
+            "num_leaves": self.num_leaves, "max_depth": 10, "min_data_in_leaf": 50,
+            "feature_fraction": 0.8, "bagging_fraction": 0.8, "bagging_freq": 1,
+            "num_threads": self.threads, "seed": self.seed,
+            "feature_fraction_seed": self.seed, "bagging_seed": self.seed,
+            "data_random_seed": self.seed, "verbosity": -1,
+        }
+
     def fit(self, train_x: np.ndarray, train_y: np.ndarray,
             validation_x: np.ndarray, validation_y: np.ndarray,
             feature_names: list[str]) -> None:
@@ -39,29 +49,30 @@ class LightGBMPairScorer:
         train = lgb.Dataset(train_x, label=train_y, feature_name=feature_names, free_raw_data=True)
         validation = lgb.Dataset(validation_x, label=validation_y, reference=train,
                                  feature_name=feature_names, free_raw_data=True)
-        params = {
-            "objective": "binary", "metric": "binary_logloss", "learning_rate": self.learning_rate,
-            "num_leaves": self.num_leaves, "max_depth": 10, "min_data_in_leaf": 50,
-            "feature_fraction": 0.8, "bagging_fraction": 0.8, "bagging_freq": 1,
-            "num_threads": self.threads, "seed": self.seed,
-            "feature_fraction_seed": self.seed, "bagging_seed": self.seed,
-            "data_random_seed": self.seed, "verbosity": -1,
-        }
-        self.model = lgb.train(params, train, num_boost_round=self.max_rounds,
+        self.model = lgb.train(self._params(), train, num_boost_round=self.max_rounds,
                                valid_sets=[validation], valid_names=["held_out_entities"],
                                callbacks=[lgb.early_stopping(self.early_stopping_rounds, verbose=False)])
+
+    def fit_full(self, train_x: np.ndarray, train_y: np.ndarray,
+                 feature_names: list[str], *, rounds: int) -> None:
+        """Refit on all labeled train entities for the validated round count."""
+        if train_x.shape[1] != len(feature_names) or len(np.unique(train_y)) < 2 or rounds < 1:
+            raise ValueError("invalid full-refit matrix, labels, or round count")
+        train = lgb.Dataset(train_x, label=train_y, feature_name=feature_names, free_raw_data=True)
+        self.model = lgb.train(self._params(), train, num_boost_round=rounds)
 
     def predict(self, features: np.ndarray) -> np.ndarray:
         if self.model is None:
             raise ValueError("model is not fitted")
+        rounds = self.model.best_iteration or self.model.current_iteration()
         return np.asarray(self.model.predict(features, num_threads=self.threads,
-                                             num_iteration=self.model.best_iteration), dtype=np.float32)
+                                             num_iteration=rounds), dtype=np.float32)
 
     def save(self, path: Path) -> None:
         if self.model is None:
             raise ValueError("model is not fitted")
         path.parent.mkdir(parents=True, exist_ok=True)
-        self.model.save_model(str(path), num_iteration=self.model.best_iteration)
+        self.model.save_model(str(path), num_iteration=self.model.best_iteration or self.model.current_iteration())
 
     @classmethod
     def load(cls, path: Path, *, threads: int = 8) -> "LightGBMPairScorer":

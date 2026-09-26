@@ -136,3 +136,11 @@ Phase 14 adds an exact cleaned-address retrieval channel for the measured low-na
 ```
 
 The ablation and resource measurements are in `reports/phase14_exact_address_ablation.md`. Development scores use a smaller distractor universe and are not production estimates.
+
+Phase 15 has a frozen full-refit workflow. It uses the held-out model's chosen boosting-round count, the selected entity policy, the train-fitted TF-IDF vectorizer, and the 37-feature schema. It resamples negatives on **all** training S1 entities, then fits a final model without reusing validation labels for early stopping:
+
+```bash
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.training.run_finalize --sample-modulus 16
+```
+
+Use `--config chimera_submission/code/business_entity_resolution/configs/aws_cpu.yaml` on the production machine after all full-universe upstream stages have completed. The development command passed; the AWS full-data run and ~3-hour/<50-GB acceptance gate are still pending. The pre-refit validation macro F0.5 is recorded in the frozen manifest and is **not** an independent score for the final refit.

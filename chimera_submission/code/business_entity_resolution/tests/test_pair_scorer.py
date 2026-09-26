@@ -35,6 +35,22 @@ class PairScorerTests(unittest.TestCase):
             scorer.fit(np.ones((4, 2), dtype=np.float32), np.ones(4),
                        np.ones((4, 2), dtype=np.float32), np.ones(4), ["only_one"])
 
+    def test_full_refit_uses_frozen_rounds_and_round_trips(self):
+        rng = np.random.default_rng(12)
+        matrix = rng.normal(size=(240, 3)).astype(np.float32)
+        labels = (matrix[:, 0] - matrix[:, 1] > 0).astype(np.int8)
+        scorer = LightGBMPairScorer(threads=2)
+        with self.assertRaises(ValueError):
+            scorer.fit_full(matrix, labels, ["a", "b", "c"], rounds=0)
+        scorer.fit_full(matrix, labels, ["a", "b", "c"], rounds=12)
+        self.assertEqual(scorer.model.current_iteration(), 12)
+        expected = scorer.predict(matrix[:20])
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "full.txt"
+            scorer.save(path)
+            loaded = LightGBMPairScorer.load(path, threads=2)
+            np.testing.assert_allclose(expected, loaded.predict(matrix[:20]), rtol=1e-6, atol=1e-7)
+
 
 if __name__ == "__main__":
     unittest.main()
