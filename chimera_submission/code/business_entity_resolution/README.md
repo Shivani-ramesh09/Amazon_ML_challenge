@@ -60,3 +60,12 @@ Phase 6 unions the channel outputs, ORs provenance, and caps each S1 candidate s
 ```
 
 The cap audit expects cached K=5,10,15,20,30 training runs. The final scored candidates are the `part-*.parquet` files in the `final_dir` printed by `run_union`. Sample recall is conditional on target IDs being independently sampled; use Phase 7 for the full blocking report.
+
+Phase 7 evaluates each channel, union, and cap on both pair and entity measures, and profiles missed ground-truth pairs:
+
+```bash
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.evaluation.blocking --sample-modulus 16
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.evaluation.miss_diagnostics --sample-modulus 16
+```
+
+The evaluation JSON is saved in `artifacts/reports/blocking/`. The default candidate cap is now 30 because the measured recall gain over 20 justified the extra candidates on the development sample. Full-universe recall and final entity F0.5 still require the production run.

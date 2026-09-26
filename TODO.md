@@ -68,12 +68,12 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Resolve major numeric/postal cap recall loss; review diff; commit `phase-06`
 
 ## Phase 7 — Blocking evaluation
-- [ ] Compute pair recall, GT hits, entity any-hit and complete recall per channel/union/cap
-- [ ] Compute candidate count mean/median/P90/P95/P99/max including zero-candidate S1
-- [ ] Compute unique GT recovered/channel and oversized-block loss; slice country/cardinality
-- [ ] Test metrics on hand sets including singleton/multi-match; integrate with dev candidates
-- [ ] Publish blocking report with runtime/RSS/artifact bytes and oracle ceiling
-- [ ] Gate downstream work on recall and candidate budget; review diff; commit `phase-07`
+- [x] Compute pair recall, GT hits, entity any-hit and complete recall per channel/union/cap
+- [x] Compute candidate count mean/median/P90/P95/P99/max including zero-candidate S1
+- [x] Compute unique GT recovered/channel and oversized-block statistics; slice country/cardinality
+- [x] Test metrics on hand sets including singleton/multi-match; integrate with dev candidates
+- [x] Publish blocking report with runtime/RSS/artifact bytes and oracle ceiling
+- [x] Gate downstream work on recall and candidate budget; review diff; commit `phase-07`
 
 ## Phase 8 — Batched pair features
 - [ ] Define CPU feature-builder interface and stable feature schema

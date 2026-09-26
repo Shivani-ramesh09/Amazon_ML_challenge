@@ -7,7 +7,7 @@
   "profile_frequency_sample_modulus": 128,
   "validation_percent": 15,
   "split_seed": 42,
-  "candidate_cap": 20,
+  "candidate_cap": 30,
   "pair_batch_size": 500000,
   "tfidf_max_df": 0.001,
   "tfidf_max_features": 60000,
