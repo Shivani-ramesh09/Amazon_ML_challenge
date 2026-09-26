@@ -18,7 +18,7 @@ from rapidfuzz import fuzz
 
 ROW_COLUMNS = ["entity_id", "name_clean", "name_core", "address_clean",
                "address_numbers", "postal_candidate", "house_number", "country_key"]
-PROVENANCE = ["retrieved_by_exact_name", "retrieved_by_core_name", "retrieved_by_rare_token",
+PROVENANCE = ["retrieved_by_exact_name", "retrieved_by_core_name", "retrieved_by_exact_address", "retrieved_by_rare_token",
               "retrieved_by_number_postal", "retrieved_by_tfidf"]
 RETRIEVAL_NUMERIC = ["retrieval_channel_count", "exact_block_size", "best_tfidf_score",
                      "tfidf_rank", "best_cheap_score", "preliminary_score"]

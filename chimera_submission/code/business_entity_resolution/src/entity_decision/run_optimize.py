@@ -89,8 +89,9 @@ def main() -> int:
                                          ("optimized", "selected_policy", "selected_metrics")):
         metric = result[metric_key]
         rows.append({"experiment_id": f"phase12_{name}_{signature[:12]}",
-                     "candidate_channels": "exact+core+rare+numeric+char_tfidf",
-                     "candidate_cap": config["candidate_cap"], "feature_set": "cpu_36",
+                     "candidate_channels": "exact+core+rare+numeric+char_tfidf" +
+                                           ("+exact_address" if config.get("address_channel", False) else ""),
+                     "candidate_cap": config["candidate_cap"], "feature_set": "cpu_37" if config.get("address_channel", False) else "cpu_36",
                      "training_negative_policy": "per_s1_ratio_5_hard_0.8",
                      "model": "lightgbm_cpu", "threshold_policy": json.dumps(result[policy_key], sort_keys=True),
                      "candidate_recall": candidate["pair_candidate_recall"],

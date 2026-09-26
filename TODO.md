@@ -121,11 +121,11 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Review diff; commit `phase-13`
 
 ## Phase 14 — Evidence-driven improvement
-- [ ] Specify one quantified error target and expected recall/F0.5/cost effect
-- [ ] Implement minimal targeted change only after baseline completion
-- [ ] Rerun invalidated stages and exact entity-level threshold optimization
-- [ ] Append baseline/treatment row to `reports/ablation.csv` with recall, F0.5, time and RSS
-- [ ] Keep only justified stable gain; test and profile; review diff; commit `phase-14`
+- [x] Specify one quantified error target and expected recall/F0.5/cost effect
+- [x] Implement minimal targeted change only after baseline completion
+- [x] Rerun invalidated stages and exact entity-level threshold optimization
+- [x] Append baseline/treatment row to `reports/ablation.csv` with recall, F0.5, time and RSS
+- [x] Keep only justified stable gain; test and profile; review diff; commit `phase-14`
 
 ## Phase 15 — Full training and frozen model
 - [ ] Lock configs/schema/seed/manifests and train chosen scorer on all labeled train S1

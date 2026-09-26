@@ -17,6 +17,7 @@ def main() -> int:
     parser.add_argument("--sample-modulus", type=int, default=None)
     parser.add_argument("--cap", type=int, default=None)
     parser.add_argument("--shards", type=int, default=64)
+    parser.add_argument("--include-address", action="store_true")
     args = parser.parse_args()
     config = load_config(args.config)
     modulus = config["sample_modulus"] if args.sample_modulus is None else args.sample_modulus
@@ -25,6 +26,8 @@ def main() -> int:
     blocking = root / "blocking" / sample_dir
     channels = [blocking / f"{args.split}_{name}.parquet" for name in
                 ("exact", "rare_numeric", "tfidf_df0.001_f60000_all")]
+    if args.include_address or config.get("address_channel", False):
+        channels.append(blocking / f"{args.split}_exact_address.parquet")
     report = build_union(
         channels, root / "normalized" / sample_dir / f"{args.split}_s1.parquet",
         root / "candidates" / "raw" / sample_dir / args.split,

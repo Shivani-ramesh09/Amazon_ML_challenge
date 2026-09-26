@@ -10,6 +10,21 @@ from chimera_submission.code.business_entity_resolution.src.retrieval.union impo
 
 
 class CandidateUnionTests(unittest.TestCase):
+    def test_exact_address_provenance_survives_union(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            pl.DataFrame({"source1_entity_id": ["S1-1"],
+                          "candidate_entity_id": ["S2-1"],
+                          "channel": ["exact_address"],
+                          "exact_block_size": [2]}).write_parquet(root / "address.parquet")
+            pl.DataFrame({"entity_id": ["S1-1"]}).write_parquet(root / "query.parquet")
+            result = build_union([root / "address.parquet"], root / "query.parquet",
+                                 root / "raw", root / "final", cap=1, shards=2)
+            pair = pl.read_parquet(str(Path(result["final_dir"]) / "*.parquet")).row(0, named=True)
+            self.assertTrue(pair["retrieved_by_exact_address"])
+            self.assertFalse(pair["retrieved_by_exact_name"])
+            self.assertEqual(pair["retrieval_channel_count"], 1)
+
     def test_dedup_provenance_cap_and_cache(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

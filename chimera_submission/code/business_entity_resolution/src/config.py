@@ -22,4 +22,9 @@ def load_config(path: Path) -> dict:
         raise ValueError(f"{path}: invalid resource limits")
     if not 0 <= data["validation_percent"] <= 100:
         raise ValueError(f"{path}: invalid validation_percent")
+    if not isinstance(data.get("address_channel", False), bool):
+        raise ValueError(f"{path}: address_channel must be boolean")
+    if any(data.get(key, 1) < 1 for key in
+           ("address_max_block_size", "address_per_query_cap", "address_min_chars")):
+        raise ValueError(f"{path}: invalid address retrieval limits")
     return data

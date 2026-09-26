@@ -26,6 +26,7 @@ class PairFeatureTests(unittest.TestCase):
             "candidate_entity_id": ["S2-1", "S2-2", "S2-2"],
             "retrieved_by_exact_name": [True, False, False],
             "retrieved_by_core_name": [True, False, False],
+            "retrieved_by_exact_address": [True, False, False],
             "retrieved_by_rare_token": [False, True, False],
             "retrieved_by_number_postal": [True, False, False],
             "retrieved_by_tfidf": [True, True, False],
@@ -46,6 +47,7 @@ class PairFeatureTests(unittest.TestCase):
         self.assertEqual(result["country_missing"], [0.0, 0.0, 1.0])
         self.assertEqual(result["best_tfidf_score"], [0.9900000095367432, 0.699999988079071, 0.0])
         self.assertEqual(result["retrieved_by_exact_name"], [1.0, 0.0, 0.0])
+        self.assertEqual(result["retrieved_by_exact_address"], [1.0, 0.0, 0.0])
 
     def test_unknown_candidate_rejected(self):
         row = pa.Table.from_pydict({name: ["a"] for name in ROW_COLUMNS})

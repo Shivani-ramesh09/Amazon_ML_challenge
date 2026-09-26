@@ -70,7 +70,7 @@ Phase 7 evaluates each channel, union, and cap on both pair and entity measures,
 
 The evaluation JSON is saved in `artifacts/reports/blocking/`. The default candidate cap is now 30 because the measured recall gain over 20 justified the extra candidates on the development sample. Full-universe recall and final entity F0.5 still require the production run.
 
-Phase 8 builds 36 numeric pair features from the exact final candidate set using bounded Arrow gathers and 250,000-pair batches in dev:
+Phase 8 builds numeric pair features from the exact final candidate set using bounded Arrow gathers and 250,000-pair batches in dev. The Phase 14 exact-address provenance signal brings the current schema to 37 features:
 
 ```bash
 .venv/bin/python -m chimera_submission.code.business_entity_resolution.src.features.run --split train --sample-modulus 16 --cap 30
@@ -121,3 +121,18 @@ Phase 13 classifies held-out errors and saves bounded representative examples:
 ```
 
 The signed error report is under `artifacts/reports/errors/`. Tags can overlap because one S1 entity can have both a retrieval miss and a wrong extra prediction.
+
+Phase 14 adds an exact cleaned-address retrieval channel for the measured low-name/high-address misses. The current configs enable it; run this channel before union, then rerun the dependent stages with the same sample modulus and cap:
+
+```bash
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.retrieval.run_exact_address --split train --sample-modulus 16
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.retrieval.run_union --split train --sample-modulus 16 --cap 30
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.evaluation.blocking --sample-modulus 16 --caps 30
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.features.run --split train --sample-modulus 16 --cap 30
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.training.run_pairs --sample-modulus 16 --negative-ratio 5
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.scoring.run_lightgbm --sample-modulus 16 --negative-ratio 5 --threads 8
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.entity_decision.run --sample-modulus 16
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.entity_decision.run_optimize --sample-modulus 16
+```
+
+The ablation and resource measurements are in `reports/phase14_exact_address_ablation.md`. Development scores use a smaller distractor universe and are not production estimates.

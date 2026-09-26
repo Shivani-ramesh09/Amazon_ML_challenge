@@ -19,7 +19,7 @@ import pyarrow.parquet as pq
 
 from chimera_submission.code.business_entity_resolution.src.retrieval.union import _s1_bucket
 
-CHANNELS = ("exact_clean", "exact_core", "rare_token", "numeric_postal", "tfidf_name")
+CHANNELS = ("exact_clean", "exact_core", "exact_address", "rare_token", "numeric_postal", "tfidf_name")
 
 
 def _metric(counts: np.ndarray, hits: np.ndarray, truth: np.ndarray) -> dict:
@@ -211,7 +211,7 @@ def main() -> int:
     blocking_root = args.artifact_dir / "blocking" / sample
     report["oversized_block_stats"] = {}
     report["channel_artifact_bytes"] = {}
-    for name in ("exact", "rare_numeric", "tfidf_df0.001_f60000_all"):
+    for name in ("exact", "rare_numeric", "tfidf_df0.001_f60000_all", "exact_address"):
         path = blocking_root / f"train_{name}.json"
         if path.is_file():
             manifest = json.loads(path.read_text())

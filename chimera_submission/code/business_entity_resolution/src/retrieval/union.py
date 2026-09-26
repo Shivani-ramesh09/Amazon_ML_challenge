@@ -23,7 +23,7 @@ RAW_SCHEMA = pa.schema([
 ])
 FINAL_COLUMNS = (
     "source1_entity_id", "candidate_entity_id", "retrieved_by_exact_name",
-    "retrieved_by_core_name", "retrieved_by_rare_token", "retrieved_by_number_postal",
+    "retrieved_by_core_name", "retrieved_by_exact_address", "retrieved_by_rare_token", "retrieved_by_number_postal",
     "retrieved_by_tfidf", "retrieval_channel_count", "exact_block_size",
     "best_tfidf_score", "tfidf_rank", "best_cheap_score", "preliminary_score",
 )
@@ -108,6 +108,7 @@ def shard_channels(channel_paths: list[Path], output_dir: Path, *, shards: int =
 def _dedup_rank(frame: pl.DataFrame, cap: int) -> tuple[pl.DataFrame, int]:
     flags = {
         "retrieved_by_exact_name": "exact_clean", "retrieved_by_core_name": "exact_core",
+        "retrieved_by_exact_address": "exact_address",
         "retrieved_by_rare_token": "rare_token", "retrieved_by_number_postal": "numeric_postal",
         "retrieved_by_tfidf": "tfidf_name",
     }
@@ -126,6 +127,7 @@ def _dedup_rank(frame: pl.DataFrame, cap: int) -> tuple[pl.DataFrame, int]:
     rank_expr = (
         4.0 * pl.col("retrieved_by_exact_name").cast(pl.Float32) +
         3.0 * pl.col("retrieved_by_core_name").cast(pl.Float32) +
+        3.0 * pl.col("retrieved_by_exact_address").cast(pl.Float32) +
         1.5 * pl.col("retrieved_by_rare_token").cast(pl.Float32) +
         4.0 * pl.col("retrieved_by_number_postal").cast(pl.Float32) +
         4.0 * pl.col("best_tfidf_score").fill_null(0.0) +
