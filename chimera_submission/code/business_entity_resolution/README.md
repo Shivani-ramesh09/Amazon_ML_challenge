@@ -4,6 +4,20 @@ Team: `chimera`
 
 The CPU pipeline is implemented through development-sample inference and official sample validation. Full AWS training and test inference have **not** run, so the repository does not yet contain a valid full-test submission or a verified production score/runtime. Run stages using the commands below; `src/main.py` is not the entry point.
 
+From the repository root, the Makefile runs the same cache-aware commands:
+
+```bash
+make help
+make install
+make dev             # complete 1/16 development run, including official sample validation
+make aws-blocking    # full candidate generation and blocking report; inspect its metrics
+make aws-train       # continue after reviewing candidate recall, runtime, and RSS
+make aws-infer       # full test inference with the frozen full-universe model
+make aws-submit      # canonical TSVs and official full-test validator
+```
+
+`make test` runs the unit suite. Individual phases are available, for example `make PROFILE=dev SAMPLE_MODULUS=16 blocking-report` or `make PROFILE=aws_cpu finalize`. `make dev` always uses the development profile; change its sample size with `DEV_SAMPLE_MODULUS=32`. `aws-*` targets require the full sample modulus. The inference and submission targets select a cached frozen model and its corresponding score manifest by config and lineage; set `FROZEN=path/to/manifest.json` and optionally `SCORES=path/to/manifest.json` to pin a specific run. AWS steps are separate so the measured blocking and validation reports can be reviewed before spending compute on later stages. Artifacts are never deleted by the Makefile.
+
 From the repository root, run:
 
 ```bash
