@@ -1,4 +1,3 @@
-```makefile
 SHELL := /bin/bash
 .SHELLFLAGS := -eu -o pipefail -c
 .DEFAULT_GOAL := help
@@ -410,4 +409,3 @@ aws-submit:
 		PROFILE=aws_cpu \
 		SAMPLE_MODULUS=1 \
 		validate
-```
