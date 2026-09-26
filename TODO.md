@@ -10,10 +10,10 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Review documentation diff and commit `docs: redesign cpu-first entity resolution architecture`
 
 ## Phase 0 — Repository audit
-- [ ] Record current and historical file inventory, data paths and validator behavior
-- [ ] Identify reusable interfaces and costly/deprecated SQL, Python-object, KNN, CV and GPU choices
-- [ ] Write audit report with measured vs historical claims clearly distinguished
-- [ ] Verify audit against actual repository; review diff; commit `phase-00`
+- [x] Record current and historical file inventory, data paths and validator behavior
+- [x] Identify reusable interfaces and costly/deprecated SQL, Python-object, KNN, CV and GPU choices
+- [x] Write audit report with measured vs historical claims clearly distinguished
+- [x] Verify audit against actual repository; review diff; commit `phase-00`
 
 ## Phase 1 — Data contract and profiling
 - [ ] Pin CPU dependencies and create dev/AWS configs with resource knobs and data paths

@@ -8,7 +8,7 @@ The 3-hour training target is a sum of cached stage work, roughly ingest/profile
 
 - **Objective:** inventory current checkout, Git history and competition contract; decide reuse/removal.
 - **Inputs / dependencies:** repository, `README.md`, nested dataset, validator, historical commits; none.
-- **Outputs / files:** audit section in `artifacts/profile/repository_audit.md`; no production code. The planning docs are a prerequisite and have their own `docs:` commit.
+- **Outputs / files:** tracked `reports/repository_audit.md`; no production code. The planning docs are a prerequisite and have their own `docs:` commit.
 - **Implementation / complexity / parallelism:** inspect tracked/ignored files and historical modules; O(repository bytes), one process. Do not execute historical pipeline.
 - **Memory / runtime:** <1 GB, <10 min excluding human review.
 - **Metrics / tests:** file inventory, old-cost evidence, current state, data paths; manual consistency check against statement.
