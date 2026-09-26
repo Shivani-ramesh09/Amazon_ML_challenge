@@ -114,11 +114,11 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Profile search; save provisional policy; review diff; commit `phase-12`
 
 ## Phase 13 — Error analysis
-- [ ] Label retrieval misses, wrong ranking, singleton FP, missed matches, wrong top and extra multi-match misses
-- [ ] Identify normalization/address/common-name/country/postal-numeric subtypes
-- [ ] Produce deterministic representative samples and counts by country/cardinality
-- [ ] Test taxonomy on hand examples; profile time/RSS; identify highest-value target
-- [ ] Review diff; commit `phase-13`
+- [x] Label retrieval misses, wrong ranking, singleton FP, missed matches, wrong top and extra multi-match misses
+- [x] Identify normalization/address/common-name/country/postal-numeric subtypes
+- [x] Produce deterministic representative samples and counts by country/cardinality
+- [x] Test taxonomy on hand examples; profile time/RSS; identify highest-value target
+- [x] Review diff; commit `phase-13`
 
 ## Phase 14 — Evidence-driven improvement
 - [ ] Specify one quantified error target and expected recall/F0.5/cost effect

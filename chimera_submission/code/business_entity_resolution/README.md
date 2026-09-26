@@ -113,3 +113,11 @@ Phase 12 tunes the zero/one/many thresholds with coarse-to-fine exact macro F0.5
 ```
 
 The provisional policy is saved under `artifacts/validation/policy/`; `reports/ablation.csv` compares it with the default. The optimizer reads train-validation groups only. A full-universe AWS run is required before the policy is frozen for test inference.
+
+Phase 13 classifies held-out errors and saves bounded representative examples:
+
+```bash
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.evaluation.run_errors --sample-modulus 16
+```
+
+The signed error report is under `artifacts/reports/errors/`. Tags can overlap because one S1 entity can have both a retrieval miss and a wrong extra prediction.
