@@ -84,12 +84,12 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Resolve budget gate; review diff; commit `phase-08`
 
 ## Phase 9 — Training pairs
-- [ ] Label only final retrieved candidates; retain all retrieved positives
-- [ ] Sample deterministic top hard and small easy negatives at tested ratios
-- [ ] Keep validation candidate distribution whole and labels out of retrieval/features
-- [ ] Test positive retention, ratios, repeatability and split isolation; dev integration
-- [ ] Report hardness mix, rows, time/RSS/bytes and projection
-- [ ] Resolve class/sample issues; review diff; commit `phase-09`
+- [x] Label only final retrieved candidates; retain all retrieved positives
+- [x] Sample deterministic top hard and small easy negatives at tested ratios
+- [x] Keep validation candidate distribution whole and labels out of retrieval/features
+- [x] Test positive retention, ratios, repeatability and split isolation; dev integration
+- [x] Report hardness mix, rows, time/RSS/bytes and projection
+- [x] Resolve class/sample issues; review diff; commit `phase-09`
 
 ## Phase 10 — LightGBM baseline
 - [ ] Implement CPU scorer interface, fixed seed, feature order, bounded training and early stopping

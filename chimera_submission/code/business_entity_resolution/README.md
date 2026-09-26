@@ -79,3 +79,13 @@ Phase 8 builds 36 numeric pair features from the exact final candidate set using
 ```
 
 Feature Parquet batches and a manifest are cached in `artifacts/features/`. The train and test commands share the same code path and feature schema.
+
+Phase 9 labels only the final retrieved pairs. It keeps every retrieved positive, selects hard and easy negatives for training, and leaves all validation candidates intact under a stable 85/15 S1 split:
+
+```bash
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.training.run_pairs --sample-modulus 16 --negative-ratio 5
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.training.run_pairs --sample-modulus 16 --negative-ratio 10
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.training.run_pairs --sample-modulus 16 --negative-ratio 20
+```
+
+Each policy creates a separate signed artifact under `artifacts/training/`. The requested ratio controls per-S1 negative quotas; the realized global ratio can differ, especially on the independently sampled dev target universe.

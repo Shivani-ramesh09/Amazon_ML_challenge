@@ -107,8 +107,8 @@ The 3-hour training target is a sum of cached stage work, roughly ingest/profile
 
 - **Objective:** all retrieved positives plus representative hard/easy negatives.
 - **Inputs / dependencies:** Phase 1 split/GT, Phase 8 features.
-- **Outputs / files:** `src/training/sample.py`, training index/manifest and tests.
-- **Implementation / complexity / parallelism:** sorted GT membership and deterministic per-S1 top hard negatives plus small random/easy sample; O(C), streaming.
+- **Outputs / files:** `src/training/{pairs,run_pairs}.py`, labeled train/validation Parquet and manifests, tests.
+- **Implementation / complexity / parallelism:** GT membership and deterministic per-S1 top hard negatives plus small random/easy sample; streaming one feature shard at a time, O(C_shard log C_shard) sorting and O(C) total I/O.
 - **Memory / runtime:** <12 GB AWS/<6 GB dev, ~5m target.
 - **Metrics / tests:** positive recovery, 1:5/10/20 samples, hardness breakdown, no validation-label leakage; hand fixture and sample integration.
 - **Acceptance / rollback:** all retrieved positives retained, validation untouched, repeatable sample; revise if imbalance/coverage fails.
