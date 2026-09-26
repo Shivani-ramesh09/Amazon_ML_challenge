@@ -18,3 +18,11 @@ The default data path is `dataset/student_resource/dataset`. Reports are written
 uv venv .venv
 uv pip install --python .venv/bin/python -r chimera_submission/code/business_entity_resolution/requirements.txt
 ```
+
+Phase 2 normalizes any source file into cached Parquet using bounded Arrow batches. For a realistic laptop sample:
+
+```bash
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.normalization.run --split train --source 1 --sample-modulus 16
+```
+
+Run the same command with `--source 2` and `--source 3`, and with `--split test`, for all six source files. Omit `--sample-modulus` to use the selected config's default (dev: 1/128 rows, AWS: full). The sample is for engineering checks only; independently sampled target IDs do not support valid candidate-recall claims.

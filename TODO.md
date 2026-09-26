@@ -26,13 +26,13 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Review performance/memory gates and diff; write report; commit `phase-01`
 
 ## Phase 2 — CPU-efficient normalization
-- [ ] Implement raw/clean/core name views with NFKC, casefold, punctuation, whitespace and safe suffix rules
-- [ ] Implement raw/clean address, numbers and postal candidate views
-- [ ] Implement India, US and France/generic fallback parsers; preserve arbitrary country values
-- [ ] Write bounded normalized Parquet partitions with versioned manifests
-- [ ] Test Unicode, suffix, missing, idempotence, postal, numeric and open-set behavior
-- [ ] Benchmark realistic train/test sample; report collision rates, throughput/RSS/bytes and full projection
-- [ ] Resolve budget/recall issues; review diff; commit `phase-02`
+- [x] Implement raw/clean/core name views with NFKC, casefold, punctuation, whitespace and safe suffix rules
+- [x] Implement raw/clean address, numbers and postal candidate views
+- [x] Implement India, US and France/generic fallback parsers; preserve arbitrary country values
+- [x] Write bounded normalized Parquet partitions with versioned manifests
+- [x] Test Unicode, suffix, missing, idempotence, postal, numeric and open-set behavior
+- [x] Benchmark realistic train/test sample; report collision rates, throughput/RSS/bytes and full projection
+- [x] Resolve budget/recall issues; review diff; commit `phase-02`
 
 ## Phase 3 — Exact and frequency-aware blocking
 - [ ] Build compact clean/core inverted indexes and record unique keys/block-size distribution
