@@ -1,6 +1,8 @@
 # CPU-first business entity resolution architecture
 
-Status: design baseline, 2026-09-26. The competition statement in `README.md` is authoritative. Numerical budgets below are targets, not measured results. No external business identity data, geocoding, APIs, or enrichment may enter any stage. The current checkout has only an empty entry point and empty requirements; historical commits contain the old implementation, not a runnable baseline in this checkout. A historical 2026-09-25 pilot reported a 356.7-second streaming file-store build at 2.6 GB, but only a 400-S1 retrieval/model demo against 16.4k targets; that demo cannot establish full-scale recall or runtime. It also found exact-name top-K truncation lost 1.3–3.0% of exact hits at K=50. These are historical measurements to revalidate, not current baseline results.
+Status: development implementation through Phase 17, 2026-09-27; full AWS execution pending. The competition statement in `README.md` is authoritative. Numerical production budgets below are targets, not measured full-scale results. No external business identity data, geocoding, APIs, or enrichment may enter any stage. Historical commits contained an impractical SQL/Python-object pipeline. A historical 2026-09-25 pilot reported a 356.7-second streaming file-store build at 2.6 GB, but only a 400-S1 retrieval/model demo against 16.4k targets; that demo cannot establish full-scale recall or runtime. It also found exact-name top-K truncation lost 1.3–3.0% of exact hits at K=50. These are historical measurements, distinct from the current development-sample measurements.
+
+Implementation status (2026-09-27): all CPU components have development-sample tests and benchmark artifacts; the full 8-vCPU/64-GB train/test run and official full-test validation have not occurred. Phase 15–17 acceptance gates remain open, and development scores must not be presented as full-universe results.
 
 ## 1. Problem, metric, and scale
 

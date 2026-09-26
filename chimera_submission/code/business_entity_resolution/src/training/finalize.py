@@ -130,6 +130,7 @@ def finalize(feature_manifest: Path, validated_model_manifest: Path, policy_path
         "full_pairs_manifest": str(pairs_manifest),
         "validated_model_manifest": str(validated_model_manifest),
         "validation_policy_path": str(policy_path),
+        "validation_policy_sha256": _sha(policy_path),
         "validation_macro_f0_5_pre_refit": policy["selected_metrics"]["macro_f0_5"],
         "validation_note": "pre-refit held-out score; final refit is not independently scored",
         "vectorizer_path": str(vectorizer_path), "vectorizer_sha256": _sha(vectorizer_path),

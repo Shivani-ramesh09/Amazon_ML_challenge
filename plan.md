@@ -196,7 +196,7 @@ The 3-hour training target is a sum of cached stage work, roughly ingest/profile
 - **Objective:** produce both exact TSVs and pass internal plus official validation.
 - **Inputs / dependencies:** Phase 16 scored candidates/policy, test IDs.
 - **Outputs / files:** `src/output/write.py`, `chimera_submission/output/{matching_results,candidate_pairs}.tsv`, package README/methodology and validation report.
-- **Implementation / complexity / parallelism:** streaming S1 order, unique target IDs, blank singleton, matching subset of final scored candidates; O(test S1 + scored pairs), single writer.
+- **Implementation / complexity / parallelism:** stream S1 in deterministic hash-shard order, compare every score pair with the exact final candidate shard, validate unique target IDs, write blank singleton lists and matched subsets; O(test S1 + scored pairs), single writer.
 - **Memory / runtime:** <12 GB AWS, ~15m target including validation.
 - **Metrics / tests:** exact row counts, schema, duplicate/invalid IDs, matched subset, bytes, official validator `--check-ids`; negative fixtures and full test validation.
 - **Acceptance / rollback:** validator PASS, internal strict subset/ID check PASS, README exact commands, docs/TODO reconciled and clean Git; regenerate outputs if any failure.

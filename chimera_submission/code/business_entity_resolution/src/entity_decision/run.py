@@ -30,7 +30,13 @@ def main() -> int:
     modulus = config["sample_modulus"] if args.sample_modulus is None else args.sample_modulus
     sample = "full" if modulus == 1 else f"sample_{modulus}"
     root = Path(config["artifact_dir"])
-    model_manifest_path = _latest_manifest(root / "models" / sample, "*/manifest.json")
+    # A later full refit also lives under models/; only held-out models have
+    # validation predictions suitable for entity-level threshold selection.
+    validation_models = [path for path in (root / "models" / sample).glob("*/manifest.json")
+                         if "prediction_dir" in json.loads(path.read_text())]
+    if not validation_models:
+        raise FileNotFoundError("no held-out model predictions for entity evaluation")
+    model_manifest_path = max(validation_models, key=lambda path: path.stat().st_mtime)
     model_manifest = json.loads(model_manifest_path.read_text())
     prediction_dir = Path(model_manifest["prediction_dir"])
     normalized_dir = root / "normalized" / sample

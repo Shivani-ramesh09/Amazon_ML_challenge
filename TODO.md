@@ -142,10 +142,10 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [ ] Meet/resolve ~2h and <50GB targets; review diff; commit `phase-16`
 
 ## Phase 17 — Submission and validation
-- [ ] Write exactly one row/test S1 to both required UTF-8 TSVs, blank singleton lists
-- [ ] Enforce unique valid S2/S3 IDs, no duplicate S1, matched IDs subset of *scored* candidates
-- [ ] Test malformed/duplicate/invalid/subset cases and sample full writer integration
-- [ ] Run official validator with nested test dir and `--check-ids`; treat subset warning as internal failure
-- [ ] Fill methodology, pin exact reproduction commands, report results/runtime/RSS/bottlenecks
+- [ ] Write exactly one row/full test S1 to both required UTF-8 TSVs, blank singleton lists (development sample passed)
+- [x] Enforce unique valid S2/S3 IDs, no duplicate S1, matched IDs subset of *scored* candidates
+- [x] Test malformed/duplicate/invalid/subset cases and development-sample writer integration
+- [ ] Run official validator with nested full test dir and `--check-ids`; treat subset warning as internal failure (sample passed)
+- [ ] Fill final methodology, pin exact reproduction commands, report full results/runtime/RSS/bottlenecks (development draft and commands complete)
 - [ ] Reconcile architecture/plan/TODO against implementation; review diff; commit `phase-17`
 - [ ] Confirm clean Git tree and final report with candidate recall, macro F0.5, P/R, singleton and 0/1/many results

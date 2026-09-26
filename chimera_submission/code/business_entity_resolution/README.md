@@ -2,7 +2,7 @@
 
 Team: `chimera`
 
-Phase 1 provides a streaming contract and data profile. The full matching pipeline is being built phase by phase; `src/main.py` is not yet runnable.
+The CPU pipeline is implemented through development-sample inference and official sample validation. Full AWS training and test inference have **not** run, so the repository does not yet contain a valid full-test submission or a verified production score/runtime. Run stages using the commands below; `src/main.py` is not the entry point.
 
 From the repository root, run:
 
@@ -155,3 +155,64 @@ Phase 16 runs cache-aware test normalization, all frozen retrieval channels, cap
 ```
 
 For the full AWS run, use `configs/aws_cpu.yaml` and its corresponding **full-universe** frozen manifest, omitting `--sample-modulus`. The runner requires the inference config to match the frozen training config, checks the train-fitted vectorizer hash, and records per-stage timing and total scored-pair coverage in `artifacts/reports/inference/`. The development smoke result is in `reports/phase16_inference_development.md`; full inference remains pending.
+
+Phase 17 writes both UTF-8 TSVs from the exact scored test candidates and applies the saved zero/one/many policy. For the validated development slice:
+
+```bash
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.output.run \
+  --frozen-manifest artifacts/models/sample_16/final_71a3fdbe5a54/manifest.json \
+  --score-manifest artifacts/predictions/test/sample_16/10c0a5ad290f/manifest.json \
+  --normalized-dir artifacts/normalized/sample_16 \
+  --output-dir artifacts/output/sample_16
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.output.validate \
+  --matching artifacts/output/sample_16/matching_results.tsv \
+  --candidate artifacts/output/sample_16/candidate_pairs.tsv \
+  --normalized-dir artifacts/normalized/sample_16
+```
+
+The second command calls the competition's `utils/validate_submission.py` logic with `--check-ids` against a temporary TSV projection of the sampled normalized IDs. It fails on the validator's otherwise soft matched-subset warning. The development output is **not** the full-test submission.
+
+On the AWS host, run the full train stages in this order from the repository root, replacing the `dev.yaml` examples above with `configs/aws_cpu.yaml` and omitting all sample-modulus overrides:
+
+```bash
+CFG=chimera_submission/code/business_entity_resolution/configs/aws_cpu.yaml
+MOD=chimera_submission.code.business_entity_resolution.src
+.venv/bin/python -m $MOD.normalization.run --config "$CFG" --split train --source 1
+.venv/bin/python -m $MOD.normalization.run --config "$CFG" --split train --source 2
+.venv/bin/python -m $MOD.normalization.run --config "$CFG" --split train --source 3
+.venv/bin/python -m $MOD.blocking.run_exact --config "$CFG" --split train
+.venv/bin/python -m $MOD.blocking.run_rare_numeric --config "$CFG" --split train
+.venv/bin/python -m $MOD.retrieval.run_exact_address --config "$CFG" --split train
+.venv/bin/python -m $MOD.retrieval.run_tfidf --config "$CFG" --split train --threads 8
+.venv/bin/python -m $MOD.retrieval.run_union --config "$CFG" --split train --cap 30
+.venv/bin/python -m $MOD.evaluation.blocking --sample-modulus 1 --caps 30
+```
+
+**Inspect full-universe pair recall, complete-entity recall, candidate count, stage runtime, and peak RSS at this gate.** Rework retrieval if the projected end-to-end budgets or recall are unacceptable. Then continue:
+
+```bash
+.venv/bin/python -m $MOD.features.run --config "$CFG" --split train --cap 30
+.venv/bin/python -m $MOD.training.run_pairs --config "$CFG" --negative-ratio 5
+.venv/bin/python -m $MOD.scoring.run_lightgbm --config "$CFG" --negative-ratio 5 --threads 8
+.venv/bin/python -m $MOD.entity_decision.run --config "$CFG"
+.venv/bin/python -m $MOD.entity_decision.run_optimize --config "$CFG"
+.venv/bin/python -m $MOD.training.run_finalize --config "$CFG"
+```
+
+Use the **full** frozen manifest printed by `run_finalize` in the next commands; replace the placeholders with those exact artifact paths. Do not substitute the development manifest or tune thresholds from test scores. Inspect the full validation macro F0.5 and singleton/zero/one/many diagnostics before freezing.
+
+```bash
+.venv/bin/python -m $MOD.inference.run --config "$CFG" \
+  --frozen-manifest <FULL_FROZEN_MANIFEST>
+.venv/bin/python -m $MOD.output.run \
+  --frozen-manifest <FULL_FROZEN_MANIFEST> \
+  --score-manifest <FULL_TEST_SCORE_MANIFEST> \
+  --normalized-dir artifacts/normalized/full \
+  --output-dir chimera_submission/output
+.venv/bin/python -m $MOD.output.validate \
+  --matching chimera_submission/output/matching_results.tsv \
+  --candidate chimera_submission/output/candidate_pairs.tsv \
+  --test-dir dataset/student_resource/dataset/test
+```
+
+The final validator uses the actual full test TSVs with ID checks enabled. The output writer independently enforces that every matched ID belongs to the exact final scored candidate set. The sample result and remaining acceptance gates are in `reports/phase17_submission_development.md`.
