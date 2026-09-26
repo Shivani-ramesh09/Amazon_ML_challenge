@@ -35,12 +35,12 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Resolve budget/recall issues; review diff; commit `phase-02`
 
 ## Phase 3 — Exact and frequency-aware blocking
-- [ ] Build compact clean/core inverted indexes and record unique keys/block-size distribution
-- [ ] Implement deterministic bounded oversize refinement and trim statistics
-- [ ] Emit exact/core candidates with provenance and block size
-- [ ] Test exact, empty, oversized, country fallback and deterministic ties; integrate on dev sample
-- [ ] Report pairs, unique GT, runtime/RSS/artifact size and full-scale estimate
-- [ ] Fix uncontrolled blocks or material GT loss; review diff; commit `phase-03`
+- [x] Build compact clean/core inverted indexes and record unique keys/block-size distribution
+- [x] Implement deterministic bounded oversize refinement and trim statistics
+- [x] Emit exact/core candidates with provenance and block size
+- [x] Test exact, empty, oversized, country fallback and deterministic ties; integrate on dev sample
+- [x] Report pairs, unique GT, runtime/RSS/artifact size and full-scale estimate
+- [x] Fix uncontrolled blocks or material GT loss; review diff; commit `phase-03`
 
 ## Phase 4 — Rare-token and numeric/postal blocking
 - [ ] Compute target token DF and bounded rare-token postings
