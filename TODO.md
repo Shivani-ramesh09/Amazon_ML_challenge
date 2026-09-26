@@ -107,11 +107,11 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Review diff; commit `phase-11`
 
 ## Phase 12 — Threshold optimization
-- [ ] Search singleton/strong/pair/gap/max-count parameters coarse-to-fine on cached validation scores
-- [ ] Evaluate neighborhood stability and zero/one/many breakdown
-- [ ] Report exact macro F0.5, micro P/R, singleton FP and threshold sensitivity
-- [ ] Test synthetic optimum and no test-label/test-score tuning; integration on cached scores
-- [ ] Profile search; lock policy; review diff; commit `phase-12`
+- [x] Search singleton/strong/pair/gap/max-count parameters coarse-to-fine on cached validation scores
+- [x] Evaluate neighborhood stability and zero/one/many breakdown
+- [x] Report exact macro F0.5, micro P/R, singleton FP and threshold sensitivity
+- [x] Test synthetic optimum and no test-label/test-score tuning; integration on cached scores
+- [x] Profile search; save provisional policy; review diff; commit `phase-12`
 
 ## Phase 13 — Error analysis
 - [ ] Label retrieval misses, wrong ranking, singleton FP, missed matches, wrong top and extra multi-match misses

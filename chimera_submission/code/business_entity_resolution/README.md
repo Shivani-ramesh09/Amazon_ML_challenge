@@ -105,3 +105,11 @@ Phase 11 groups every held-out S1, including no-candidate rows, and applies an i
 ```
 
 Grouped scores and entity metrics are cached in `artifacts/validation/`. Threshold tuning is a separate Phase 12 step over these cached groups.
+
+Phase 12 tunes the zero/one/many thresholds with coarse-to-fine exact macro F0.5 search and records baseline and optimized ablations:
+
+```bash
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.entity_decision.run_optimize --sample-modulus 16
+```
+
+The provisional policy is saved under `artifacts/validation/policy/`; `reports/ablation.csv` compares it with the default. The optimizer reads train-validation groups only. A full-universe AWS run is required before the policy is frozen for test inference.
