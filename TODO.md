@@ -92,11 +92,11 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Resolve class/sample issues; review diff; commit `phase-09`
 
 ## Phase 10 — LightGBM baseline
-- [ ] Implement CPU scorer interface, fixed seed, feature order, bounded training and early stopping
-- [ ] Train on train entities and score every validation candidate
-- [ ] Report pair PR-AUC/P/R, importance, iteration, time/RSS and model bytes
-- [ ] Test model save/load, score schema and no validation S1 in training; dev integration
-- [ ] Resolve training budget; review diff; commit `phase-10`
+- [x] Implement CPU scorer interface, fixed seed, feature order, bounded training and early stopping
+- [x] Train on train entities and score every validation candidate
+- [x] Report pair PR-AUC/P/R, importance, iteration, time/RSS and model bytes
+- [x] Test model save/load, score schema and no validation S1 in training; dev integration
+- [x] Resolve training budget; review diff; commit `phase-10`
 
 ## Phase 11 — Entity-level decision
 - [ ] Aggregate top scores/gaps/counts/channel agreement per S1 including zero candidates

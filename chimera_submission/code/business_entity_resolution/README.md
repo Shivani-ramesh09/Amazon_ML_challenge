@@ -89,3 +89,11 @@ Phase 9 labels only the final retrieved pairs. It keeps every retrieved positive
 ```
 
 Each policy creates a separate signed artifact under `artifacts/training/`. The requested ratio controls per-S1 negative quotas; the realized global ratio can differ, especially on the independently sampled dev target universe.
+
+Phase 10 trains the CPU LightGBM pair scorer with early stopping and writes scores for **every** validation candidate:
+
+```bash
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.scoring.run_lightgbm --sample-modulus 16 --negative-ratio 5 --threads 8
+```
+
+The model and pair diagnostic metrics are cached in `artifacts/models/`; sharded validation scores are in `artifacts/predictions/validation/`. Pairwise precision at 0.5 is only a diagnostic; Phase 11–12 decide the actual zero/one/many sets against entity-level macro F0.5.
