@@ -35,3 +35,10 @@ Phase 3 exact blocking, after the three normalized files for a split exist:
 ```
 
 The second command reports **conditional sample recall** only. Full-universe recall and entity completeness are later evaluation gates.
+
+Phase 4 adds rare-token and name-plus-postal/house channels:
+
+```bash
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.blocking.run_rare_numeric --split train --sample-modulus 16
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.blocking.eval_cheap --normalized-dir artifacts/normalized/sample_16 --exact artifacts/blocking/sample_16/train_exact.parquet --additional artifacts/blocking/sample_16/train_rare_numeric.parquet
+```

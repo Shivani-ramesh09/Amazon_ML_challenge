@@ -43,12 +43,12 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Fix uncontrolled blocks or material GT loss; review diff; commit `phase-03`
 
 ## Phase 4 — Rare-token and numeric/postal blocking
-- [ ] Compute target token DF and bounded rare-token postings
-- [ ] Add name-evidence plus postal/number channels; prohibit number-only global joins
-- [ ] Emit channel provenance and posting/trim statistics
-- [ ] Test frequent tokens, number collisions, missing/country cases; integrate on dev sample
-- [ ] Report incremental unique GT, candidate volume, throughput/RSS/bytes and projection
-- [ ] Resolve budget/recall gate; review diff; commit `phase-04`
+- [x] Compute target token DF and bounded rare-token postings
+- [x] Add name-evidence plus postal/number channels; prohibit number-only global joins
+- [x] Emit channel provenance and posting/trim statistics
+- [x] Test frequent tokens, number collisions, missing/country cases; integrate on dev sample
+- [x] Report incremental unique GT, candidate volume, throughput/RSS/bytes and projection
+- [x] Resolve budget/recall gate; review diff; commit `phase-04`
 
 ## Phase 5 — Sparse character TF-IDF retrieval
 - [ ] Define CPU retriever interface and frozen train-fitted 3–5 gram vectorizer
