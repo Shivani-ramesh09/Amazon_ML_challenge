@@ -1,2 +1,6 @@
 dataset/
 .DS_Store
+artifacts/
+.venv/
+__pycache__/
+.pytest_cache/

@@ -16,14 +16,14 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Verify audit against actual repository; review diff; commit `phase-00`
 
 ## Phase 1 — Data contract and profiling
-- [ ] Pin CPU dependencies and create dev/AWS configs with resource knobs and data paths
-- [ ] Implement streaming explicit-tab source and truth contract with string-preserving blanks
-- [ ] Validate source prefixes/unique IDs and truth S1/S2/S3 references
-- [ ] Compute row counts, null/empty rates, country, text length, common-name and GT-cardinality distributions
-- [ ] Build deterministic entity-level split; record seed and raw input fingerprints
-- [ ] Add TSV/missing/duplicate/reference/split unit tests and small-file integration test
-- [ ] Profile full or representative scan throughput, RAM, artifact bytes and projected AWS runtime
-- [ ] Review performance/memory gates and diff; write report; commit `phase-01`
+- [x] Pin CPU dependencies and create dev/AWS configs with resource knobs and data paths
+- [x] Implement streaming explicit-tab source and truth contract with string-preserving blanks
+- [x] Validate source prefixes/unique IDs and truth S1/S2/S3 references
+- [x] Compute row counts, null/empty rates, country, text length, common-name and GT-cardinality distributions
+- [x] Build deterministic entity-level split; record seed and raw input fingerprints
+- [x] Add TSV/missing/duplicate/reference/split unit tests and small-file integration test
+- [x] Profile full or representative scan throughput, RAM, artifact bytes and projected AWS runtime
+- [x] Review performance/memory gates and diff; write report; commit `phase-01`
 
 ## Phase 2 — CPU-efficient normalization
 - [ ] Implement raw/clean/core name views with NFKC, casefold, punctuation, whitespace and safe suffix rules

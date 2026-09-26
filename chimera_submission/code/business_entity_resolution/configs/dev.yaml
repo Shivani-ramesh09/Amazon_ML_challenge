@@ -1,0 +1,12 @@
+{
+  "data_dir": "dataset/student_resource/dataset",
+  "artifact_dir": "artifacts",
+  "threads": 10,
+  "memory_budget_gb": 12,
+  "sample_modulus": 128,
+  "profile_frequency_sample_modulus": 128,
+  "validation_percent": 15,
+  "split_seed": 42,
+  "candidate_cap": 15,
+  "pair_batch_size": 250000
+}
