@@ -114,6 +114,8 @@ def train_and_score(training_dir: Path, model_path: Path, prediction_dir: Path,
                     "source1_entity_id": frame["source1_entity_id"],
                     "candidate_entity_id": frame["candidate_entity_id"],
                     "score": pa.array(score), "label": pa.array(labels),
+                    "retrieval_channel_count": frame["retrieval_channel_count"],
+                    "tfidf_rank": frame["tfidf_rank"],
                 })
                 if writer is None:
                     writer = pq.ParquetWriter(output_path, output.schema, compression="zstd")

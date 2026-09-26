@@ -99,12 +99,12 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Resolve training budget; review diff; commit `phase-10`
 
 ## Phase 11 — Entity-level decision
-- [ ] Aggregate top scores/gaps/counts/channel agreement per S1 including zero candidates
-- [ ] Implement deterministic singleton/one/many policy with configurable thresholds
-- [ ] Implement official macro entity F0.5 and micro diagnostics
-- [ ] Test empty/empty=1, empty/nonempty=0, multiple matches and published 0.714 example
-- [ ] Report cardinality confusion, singleton accuracy/FP, time/RSS/bytes
-- [ ] Review diff; commit `phase-11`
+- [x] Aggregate top scores/gaps/counts/channel agreement per S1 including zero candidates
+- [x] Implement deterministic singleton/one/many policy with configurable thresholds
+- [x] Implement official macro entity F0.5 and micro diagnostics
+- [x] Test empty/empty=1, empty/nonempty=0, multiple matches and published 0.714 example
+- [x] Report cardinality confusion, singleton accuracy/FP, time/RSS/bytes
+- [x] Review diff; commit `phase-11`
 
 ## Phase 12 — Threshold optimization
 - [ ] Search singleton/strong/pair/gap/max-count parameters coarse-to-fine on cached validation scores

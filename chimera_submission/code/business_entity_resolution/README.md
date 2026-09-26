@@ -97,3 +97,11 @@ Phase 10 trains the CPU LightGBM pair scorer with early stopping and writes scor
 ```
 
 The model and pair diagnostic metrics are cached in `artifacts/models/`; sharded validation scores are in `artifacts/predictions/validation/`. Pairwise precision at 0.5 is only a diagnostic; Phase 11–12 decide the actual zero/one/many sets against entity-level macro F0.5.
+
+Phase 11 groups every held-out S1, including no-candidate rows, and applies an initial singleton-aware zero/one/many policy. It scores predictions with the exact per-entity F0.5 formula from the competition statement:
+
+```bash
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.entity_decision.run --sample-modulus 16
+```
+
+Grouped scores and entity metrics are cached in `artifacts/validation/`. Threshold tuning is a separate Phase 12 step over these cached groups.
