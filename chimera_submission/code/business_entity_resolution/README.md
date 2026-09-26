@@ -16,6 +16,8 @@ make aws-infer       # full test inference with the frozen full-universe model
 make aws-submit      # canonical TSVs and official full-test validator
 ```
 
+`make install` installs Python 3.12 with `uv` and creates a Python 3.12 virtual environment, matching the development runtime. On an AWS image without `uv`, install `uv` first using its official installer, then run `make install`.
+
 `make test` runs the unit suite. Individual phases are available, for example `make PROFILE=dev SAMPLE_MODULUS=16 blocking-report` or `make PROFILE=aws_cpu finalize`. `make dev` always uses the development profile; change its sample size with `DEV_SAMPLE_MODULUS=32`. `aws-*` targets require the full sample modulus. The inference and submission targets select a cached frozen model and its corresponding score manifest by config and lineage; set `FROZEN=path/to/manifest.json` and optionally `SCORES=path/to/manifest.json` to pin a specific run. AWS steps are separate so the measured blocking and validation reports can be reviewed before spending compute on later stages. Artifacts are never deleted by the Makefile.
 
 From the repository root, run:

@@ -5,6 +5,7 @@ MAKEFLAGS += --no-print-directory
 
 PYTHON ?= .venv/bin/python
 UV ?= uv
+PYTHON_VERSION ?= 3.12
 PROFILE ?= dev
 DEV_SAMPLE_MODULUS ?= 16
 CONFIG := chimera_submission/code/business_entity_resolution/configs/$(PROFILE).yaml
@@ -45,13 +46,15 @@ help:
 	  '  make PROFILE=dev blocking-report     Run an individual cached phase' \
 	  '  make PROFILE=dev finalize            Run through frozen refit only' \
 	  '  make PROFILE=dev validate            Infer/write/validate using existing refit' \
-	  'Variables: PYTHON=.venv/bin/python PROFILE=dev|aws_cpu SAMPLE_MODULUS=16|1' \
+	  'Variables: PYTHON=.venv/bin/python PYTHON_VERSION=3.12 PROFILE=dev|aws_cpu' \
+	  '           SAMPLE_MODULUS=16|1' \
 	  '           DEV_SAMPLE_MODULUS=16 (for make dev)' \
 	  '           NEGATIVE_RATIO=5 FROZEN=<manifest> SCORES=<manifest>' \
 	  'No target deletes cached artifacts. AWS steps are intentionally separate.'
 
 install:
-	$(UV) venv .venv
+	$(UV) python install $(PYTHON_VERSION)
+	$(UV) venv --python $(PYTHON_VERSION) .venv
 	$(UV) pip install --python .venv/bin/python -r chimera_submission/code/business_entity_resolution/requirements.txt
 
 check-env:
