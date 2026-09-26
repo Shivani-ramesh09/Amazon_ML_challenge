@@ -42,3 +42,11 @@ Phase 4 adds rare-token and name-plus-postal/house channels:
 .venv/bin/python -m chimera_submission.code.business_entity_resolution.src.blocking.run_rare_numeric --split train --sample-modulus 16
 .venv/bin/python -m chimera_submission.code.business_entity_resolution.src.blocking.eval_cheap --normalized-dir artifacts/normalized/sample_16 --exact artifacts/blocking/sample_16/train_exact.parquet --additional artifacts/blocking/sample_16/train_rare_numeric.parquet
 ```
+
+Phase 5 builds a frozen train-fitted sparse name vectorizer and top-N fuzzy candidates. Run train first, then test so test uses the saved train vocabulary and IDF:
+
+```bash
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.retrieval.run_tfidf --split train --sample-modulus 16 --threads 4
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.retrieval.run_tfidf --split test --sample-modulus 16 --threads 4
+.venv/bin/python -m chimera_submission.code.business_entity_resolution.src.blocking.eval_cheap --normalized-dir artifacts/normalized/sample_16 --exact artifacts/blocking/sample_16/train_exact.parquet --additional artifacts/blocking/sample_16/train_rare_numeric.parquet --additional artifacts/blocking/sample_16/train_tfidf_df0.001_f60000_all.parquet
+```

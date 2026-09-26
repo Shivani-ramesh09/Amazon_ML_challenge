@@ -51,13 +51,13 @@ Unchecked means not yet verified. A phase is complete only after tests, benchmar
 - [x] Resolve budget/recall gate; review diff; commit `phase-04`
 
 ## Phase 5 — Sparse character TF-IDF retrieval
-- [ ] Define CPU retriever interface and frozen train-fitted 3–5 gram vectorizer
-- [ ] Build float32 CSR target/query matrices; estimate nnz and peak multiplication workspace
-- [ ] Implement sparse top-N batched multiplication with bounded memory and rank/score provenance
-- [ ] Implement cheap-stage uncertainty gate; audit gated vs all-query retrieval recall
-- [ ] Test tiny exact top-K fixture, score/rank stability, empty names and dev integration
-- [ ] Profile throughput/RSS/artifact bytes and project full train/test runtime
-- [ ] Redesign excessive stage or gate recall loss; review diff; commit `phase-05`
+- [x] Define CPU retriever interface and frozen train-fitted 3–5 gram vectorizer
+- [x] Build float32 CSR target/query matrices; estimate nnz and peak multiplication workspace
+- [x] Implement sparse top-N batched multiplication with bounded memory and rank/score provenance
+- [x] Implement cheap-stage uncertainty gate; audit gated vs all-query retrieval recall
+- [x] Test tiny exact top-K fixture, score/rank stability, empty names and dev integration
+- [x] Profile throughput/RSS/artifact bytes and project full train/test runtime
+- [x] Redesign excessive stage or gate recall loss; review diff; commit `phase-05`
 
 ## Phase 6 — Candidate union, deduplication and cap
 - [ ] Merge channel outputs by canonical integer pair key and OR provenance
