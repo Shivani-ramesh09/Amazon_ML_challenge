@@ -27,7 +27,9 @@ def _metric(counts: np.ndarray, hits: np.ndarray, truth: np.ndarray) -> dict:
     hit_positive = hits[positive]
     truth_positive = truth[positive]
     oracle = np.ones(len(truth), dtype=np.float64)
-    oracle[positive] = 1.25 * hit_positive / (truth_positive + 0.25 * hit_positive)
+    # Perfectly reject unretrieved false pairs: TP=hits, FP=0, FN=truth-hits.
+    # F0.5 = 1.25*TP / (1.25*TP + FP + 0.25*FN).
+    oracle[positive] = 1.25 * hit_positive / (hit_positive + 0.25 * truth_positive)
     return {
         "candidate_pairs": int(counts.sum()),
         "mean_candidates": float(counts.mean()),

@@ -37,7 +37,7 @@ class BlockingEvaluationTests(unittest.TestCase):
             self.assertEqual(metric["entity_complete_recall"], 0)
             self.assertEqual(metric["zero_candidate_entities"], 1)
             self.assertEqual(metric["max_candidates"], 2)
-            self.assertAlmostEqual(metric["conditional_oracle_macro_f0_5"], (1.25 / 2.25 + 1) / 3)
+            self.assertAlmostEqual(metric["conditional_oracle_macro_f0_5"], (1.25 / 1.5 + 1) / 3)
             self.assertEqual(report["true_singletons"], 1)
             self.assertEqual(report["exclusive_gt_pairs_by_channel"]["exact_clean"], 1)
             self.assertEqual(report["original_cardinality_slices"]["many"]["s1_rows"], 1)

@@ -1,6 +1,6 @@
 # Phase 7 — blocking evaluation
 
-> Historical development benchmark on independently sampled targets. Entity-quality results are superseded by [the entity-complete dev correction](dev_sample_correction.md); stage throughput remains an engineering observation.
+> Historical development benchmark on independently sampled targets. Entity-quality results are superseded by [the entity-complete dev correction](dev_sample_correction.md); stage throughput remains an engineering observation. Oracle F0.5 values in this historical report also used an incorrect denominator; the [corrected dev report](dev_sample_correction.md) and current evaluator supersede them.
 
 The shardwise evaluator reads final candidates exactly as the scorer will see them. It includes zero-candidate S1 rows, compares retrieved pairs to ground truth, and reports pair, any-hit, complete-hit, country, cardinality, and best-case entity F0.5. It runs per S1-hash shard rather than collecting all candidate pairs. A hand fixture checks singleton, multi-match, retrieval miss, and F0.5 arithmetic.
 
